@@ -1,0 +1,29 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+    <changeSet author="awawlkowiak (generated)" id="issue-680">
+        <addColumn tableName="location">
+            <column name="last_verified_by" type="varchar(255)"/>
+        </addColumn>
+        <addColumn tableName="organization">
+            <column name="last_verified_by" type="varchar(255)"/>
+        </addColumn>
+        <addColumn tableName="service">
+            <column name="last_verified_by" type="varchar(255)"/>
+        </addColumn>
+        <addColumn tableName="location">
+            <column name="last_verified_on" type="bytea"/>
+        </addColumn>
+        <addColumn tableName="organization">
+            <column name="last_verified_on" type="bytea"/>
+        </addColumn>
+        <addColumn tableName="service">
+            <column name="last_verified_on" type="bytea"/>
+        </addColumn>
+    </changeSet>
+</databaseChangeLog>

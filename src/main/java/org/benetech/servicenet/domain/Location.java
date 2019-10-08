@@ -3,6 +3,7 @@ package org.benetech.servicenet.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.maps.model.LatLng;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.JoinColumn;
@@ -76,6 +77,13 @@ public class Location extends AbstractEntity implements Serializable, DeepCompar
     @Size(max = 255, message = "Field value is too long.")
     private String providerName;
 
+    @Column(name = "last_verified_on")
+    private ZonedDateTime lastVerifiedOn;
+
+    @Column(name = "last_verified_by")
+    @Size(max = 255, message = "Field value is too long.")
+    private String lastVerifiedBy;
+
     @OneToOne(mappedBy = "location", fetch = FetchType.LAZY)
     @JsonIgnore
     private PhysicalAddress physicalAddress;
@@ -127,6 +135,8 @@ public class Location extends AbstractEntity implements Serializable, DeepCompar
         this.externalDbId = loc.externalDbId;
         this.providerName = loc.providerName;
         this.organization = loc.organization;
+        this.lastVerifiedOn = loc.lastVerifiedOn;
+        this.lastVerifiedBy = loc.lastVerifiedBy;
     }
 
     public LatLng getCoordinates() {
@@ -251,6 +261,16 @@ public class Location extends AbstractEntity implements Serializable, DeepCompar
     public Location removePhones(Phone phone) {
         this.phones.remove(phone);
         phone.setLocation(null);
+        return this;
+    }
+
+    public Location lastVerifiedOn(ZonedDateTime lastVerifiedOn) {
+        this.lastVerifiedOn = lastVerifiedOn;
+        return this;
+    }
+
+    public Location lastVerifiedBy(String lastVerifiedBy) {
+        this.lastVerifiedBy = lastVerifiedBy;
         return this;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove

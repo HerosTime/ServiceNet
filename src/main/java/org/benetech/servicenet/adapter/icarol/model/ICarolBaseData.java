@@ -1,5 +1,6 @@
 package org.benetech.servicenet.adapter.icarol.model;
 
+import java.time.ZonedDateTime;
 import lombok.Data;
 
 @Data
@@ -23,7 +24,7 @@ public class ICarolBaseData extends ICarolElement {
 
     private String modified;
 
-    private String lastVerifiedOn;
+    private ZonedDateTime lastVerifiedOn;
 
     private Boolean isFeatured;
 

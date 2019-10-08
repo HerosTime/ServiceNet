@@ -109,6 +109,7 @@ public interface ICarolDataMapper extends ICarolConfidentialFieldsMapper {
     @Mapping(target = "url", source = "contactDetails", qualifiedByName = "url")
     @Mapping(target = "description", source = "descriptionText")
     @Mapping(target = "externalDbId", source = "id")
+    @Mapping(target = "lastVerifiedOn", source = "lastVerifiedOn")
     @Mapping(target = "id", ignore = true)
     Organization mapOrganization(ICarolAgency agency);
 
@@ -119,6 +120,7 @@ public interface ICarolDataMapper extends ICarolConfidentialFieldsMapper {
     @Mapping(target = "externalDbId", source = "id")
     @Mapping(target = "description", source = "descriptionText")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "lastVerifiedOn", source = "lastVerifiedOn")
     @Mapping(target = "eligibility", ignore = true)
     Service mapService(ICarolProgram program);
 

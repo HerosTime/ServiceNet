@@ -90,6 +90,13 @@ public class Organization extends AbstractEntity implements Serializable, DeepCo
     @Size(max = 255, message = "Field value is too long.")
     private String externalDbId;
 
+    @Column(name = "last_verified_on")
+    private ZonedDateTime lastVerifiedOn;
+
+    @Column(name = "last_verified_by")
+    @Size(max = 255, message = "Field value is too long.")
+    private String lastVerifiedBy;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(unique = true)
     private Organization replacedBy;
@@ -142,6 +149,8 @@ public class Organization extends AbstractEntity implements Serializable, DeepCo
         this.active = org.active;
         this.updatedAt = org.updatedAt;
         this.externalDbId = org.externalDbId;
+        this.lastVerifiedOn = org.lastVerifiedOn;
+        this.lastVerifiedBy = org.lastVerifiedBy;
     }
 
     public Organization name(String name) {
@@ -285,6 +294,16 @@ public class Organization extends AbstractEntity implements Serializable, DeepCo
 
     public Organization externalDbId(String externalDbId) {
         this.externalDbId = externalDbId;
+        return this;
+    }
+
+    public Organization lastVerifiedOn(ZonedDateTime lastVerifiedOn) {
+        this.lastVerifiedOn = lastVerifiedOn;
+        return this;
+    }
+
+    public Organization lastVerifiedBy(String lastVerifiedBy) {
+        this.lastVerifiedBy = lastVerifiedBy;
         return this;
     }
 
