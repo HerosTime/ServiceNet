@@ -55,7 +55,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
 
     private MetricRegistry metricRegistry;
 
-    public static final int REQUEST_TIMEOUT = 6000000;
+    public static final int REQUEST_TIMEOUT = 60000000;
 
     public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
 
