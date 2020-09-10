@@ -18,6 +18,8 @@ import org.benetech.servicenet.service.dto.Suggestions;
 import org.benetech.servicenet.service.dto.provider.DeactivatedOrganizationDTO;
 import org.benetech.servicenet.service.dto.provider.ProviderFilterDTO;
 import org.benetech.servicenet.web.rest.util.PaginationUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -37,6 +39,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ActivityResource {
+
+    private final Logger log = LoggerFactory.getLogger(ActivityResource.class);
 
     private final ActivityService activityService;
 
@@ -86,16 +90,22 @@ public class ActivityResource {
     @GetMapping("/provider-records")
     @Timed
     public ResponseEntity<Page<ProviderRecordDTO>> getProviderActivities(Pageable pageable) {
-        return ResponseEntity.ok().body(
-            activityService.getPartnerActivitiesForCurrentUser(pageable)
-        );
+        long startTime = System.nanoTime();
+        Page<ProviderRecordDTO> providerRecordDTOS =
+            activityService.getPartnerActivitiesForCurrentUser(pageable);
+        long stopTime = System.nanoTime();
+        log.debug("getProviderActivities execution time: {}", (stopTime - startTime));
+        return ResponseEntity.ok().body(providerRecordDTOS);
     }
 
     @PostMapping("/all-provider-records")
     @Timed
     public ResponseEntity<List<ProviderRecordDTO>> getAllProviderActivities(
         @RequestBody ProviderFilterDTO providerFilterDTO, @RequestParam(required = false) String search, Pageable pageable) {
+        long startTime = System.nanoTime();
         Page<ProviderRecordDTO> page = activityService.getAllPartnerActivities(providerFilterDTO, search, pageable);
+        long stopTime = System.nanoTime();
+        log.debug("getAllProviderActivities execution time: {}", (stopTime - startTime));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/all-provider-records");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
@@ -105,8 +115,11 @@ public class ActivityResource {
     public ResponseEntity<List<ProviderRecordForMapDTO>> getAllProviderActivitiesForMap(
         @RequestBody ProviderFilterDTO providerFilterDTO, @RequestParam(required = false) String search,
         @RequestParam(required = false) List<Double> boundaries, Pageable pageable) {
+        long startTime = System.nanoTime();
         Page<ProviderRecordForMapDTO> page = activityService
             .getAllPartnerActivitiesForMap(pageable, providerFilterDTO, search, boundaries);
+        long stopTime = System.nanoTime();
+        log.debug("getAllProviderActivitiesForMap execution time: {}", (stopTime - startTime));
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/all-provider-records-map");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }

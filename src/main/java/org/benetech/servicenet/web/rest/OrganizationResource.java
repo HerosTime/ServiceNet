@@ -249,7 +249,10 @@ public class OrganizationResource {
     @Timed
     public ResponseEntity<Void> deleteOrganization(@PathVariable UUID id) {
         log.debug("REST request to delete Organization : {}", id);
+        long startTime = System.nanoTime();
         organizationService.delete(id);
+        long stopTime = System.nanoTime();
+        log.debug("Delete execution time: {}", (stopTime - startTime));
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
