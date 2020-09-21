@@ -306,7 +306,8 @@ public class ProviderRecordsRepository {
         predicate = this.addLocationFilters(predicate, providerFilterDTO, locationJoin, exclusions);
 
         query.where(predicate);
-        query.select(cb.construct(ProviderRecordForMapDTO.class, organizationJoin.get("id"), root));
+        query.select(cb.construct(ProviderRecordForMapDTO.class, organizationJoin.get("id"),
+            root.get("id"), root.get("address"), root.get("latitude"), root.get("longitude")));
         query.groupBy(root.get(ID), organizationJoin.get(ID));
         return createQueryWithPageable(query, pageable);
     }
